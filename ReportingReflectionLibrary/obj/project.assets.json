@@ -182,11 +182,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ronaldroyce/Projects/ReportingService/ReportingReflectionLibrary/ReportingReflectionLibrary.csproj",
+      "projectUniqueName": "/Users/ronaldroyce/Projects/GitHub/ReportingServices.NET/ReportingReflectionLibrary/ReportingReflectionLibrary.csproj",
       "projectName": "ReportingReflectionLibrary",
-      "projectPath": "/Users/ronaldroyce/Projects/ReportingService/ReportingReflectionLibrary/ReportingReflectionLibrary.csproj",
+      "projectPath": "/Users/ronaldroyce/Projects/GitHub/ReportingServices.NET/ReportingReflectionLibrary/ReportingReflectionLibrary.csproj",
       "packagesPath": "/Users/ronaldroyce/.nuget/packages/",
-      "outputPath": "/Users/ronaldroyce/Projects/ReportingService/ReportingReflectionLibrary/obj/",
+      "outputPath": "/Users/ronaldroyce/Projects/GitHub/ReportingServices.NET/ReportingReflectionLibrary/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

@@ -72,7 +72,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>..\..\..\mysql-connector-net\6.10.8\v4.5.2\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\..\..\..\mysql-connector-net\6.10.8\v4.5.2\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

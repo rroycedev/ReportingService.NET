@@ -22,7 +22,7 @@ namespace ReportingService.Classes.Reflection
             return Assembly.LoadFile(fileName);
         }
 
-        public static void ProcessEvent(Assembly asm, String className, ReportEvent evt, ConnectionManager connectionManager, int sleepTime)
+        public static void ProcessEvent(Assembly asm, String className, String methodName, ReportEvent evt, ConnectionManager connectionManager, int sleepTime)
         {
             Type type = asm.GetType(className);
 
@@ -33,7 +33,7 @@ namespace ReportingService.Classes.Reflection
 
             ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
             object calc = ctor.Invoke(null);
-            MethodInfo m = type.GetMethod("Start");
+            MethodInfo m = type.GetMethod(methodName);
 
             if (m == null)
             {

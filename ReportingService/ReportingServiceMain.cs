@@ -162,7 +162,7 @@ namespace ReportingService
 
                 try
                 {
-                    ReflectionManager.ProcessEvent(asm, eventProcessorInfo.ClassName, evt, connectionManager, (int)sleepTime);
+                    ReflectionManager.ProcessEvent(asm, eventProcessorInfo.ClassName, eventProcessorInfo.MethodName, evt, connectionManager, (int)sleepTime);
                 }
                 catch (EventProcessorClassNotFound)
                 {
