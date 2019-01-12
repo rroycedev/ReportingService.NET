@@ -4,6 +4,7 @@ using System.Reflection;
 using ReportingServiceDatabase.Classes.Exceptions;
 using ReportingServiceDatabase.Classes.Database;
 using ReportingServiceDatabase.DataSets;
+using ReportingServiceDatabase.Logging;
 
 
 namespace ReportingService.Classes.Reflection
@@ -16,6 +17,8 @@ namespace ReportingService.Classes.Reflection
 
         public static Assembly LoadAssembly(String fileName)
         {
+            Logger.Debug("Loading assembly: " + fileName);
+
             return Assembly.LoadFile(fileName);
         }
 
