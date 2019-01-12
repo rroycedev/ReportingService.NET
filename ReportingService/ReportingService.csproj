@@ -84,8 +84,6 @@
     <Compile Include="AccountEventProcesser.cs" />
     <Compile Include="EventProcesser.cs" />
     <Compile Include="Classes\Database\EventProcessorTable.cs" />
-    <Compile Include="Models\SupportedEventProcessor.cs" />
-    <Compile Include="Models\SupportedEventProcessorContext.cs" />
     <Compile Include="Classes\EventQueue.cs" />
     <Compile Include="Classes\EventQueueManager.cs" />
     <Compile Include="ReportingServiceMain.cs" />
@@ -97,7 +95,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Classes\" />
     <Folder Include="Classes\Database\" />
     <Folder Include="Classes\Configuration\" />
