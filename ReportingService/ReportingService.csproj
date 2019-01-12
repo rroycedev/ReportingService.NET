@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{CC02D0F6-DC8E-4487-B620-89E6CB985C4F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ReportingService</RootNamespace>
+    <AssemblyName>ReportingService</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Security" />
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Slant.Linq">
+      <HintPath>..\packages\Slant.Linq.1.0.0\lib\Slant.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Slant.Entity">
+      <HintPath>..\packages\Slant.Entity.1.1.0\lib\Slant.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="ADO.NET.Helper">
+      <HintPath>..\packages\ADO.NET.Helper.1.0.3.0\lib\ADO.NET.Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.10.8\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="MySql.Data.Entity.EF6">
+      <HintPath>..\..\..\mysql-connector-net\6.10.8\v4.5.2\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadExtension.cs" />
+    <Compile Include="Classes\Configuration\ConfigurationReader.cs" />
+    <Compile Include="Classes\Reflection\ReflectionManager.cs" />
+    <Compile Include="AccountEventProcesser.cs" />
+    <Compile Include="EventProcesser.cs" />
+    <Compile Include="Classes\Database\EventProcessorTable.cs" />
+    <Compile Include="Models\SupportedEventProcessor.cs" />
+    <Compile Include="Models\SupportedEventProcessorContext.cs" />
+    <Compile Include="Classes\EventQueue.cs" />
+    <Compile Include="Classes\EventQueueManager.cs" />
+    <Compile Include="ReportingServiceMain.cs" />
+    <Compile Include="DataSets\SupportedEventProcessor.cs" />
+    <Compile Include="DataAdapters\SupportedEventProcessorDataAdapter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Classes\" />
+    <Folder Include="Classes\Database\" />
+    <Folder Include="Classes\Configuration\" />
+    <Folder Include="Classes\Exceptions\" />
+    <Folder Include="Classes\Reflection\" />
+    <Folder Include="DataSets\" />
+    <Folder Include="DataAdapters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReportingServiceDatabase\ReportingServiceDatabase.csproj">
+      <Project>{66824D0E-72AE-4F54-BE3B-57CC439B014A}</Project>
+      <Name>ReportingServiceDatabase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
