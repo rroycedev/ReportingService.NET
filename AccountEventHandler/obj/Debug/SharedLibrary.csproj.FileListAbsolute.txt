@@ -1,6 +1,0 @@
-/Users/ronaldroyce/Projects/ReportingService/SharedLibrary/obj/Debug/SharedLibrary.csproj.CoreCompileInputs.cache
-/Users/ronaldroyce/Projects/ReportingService/SharedLibrary/obj/Debug/SharedLibrary.csprojAssemblyReference.cache
-/Users/ronaldroyce/Projects/ReportingService/SharedLibrary/bin/Debug/SharedLibrary.dll
-/Users/ronaldroyce/Projects/ReportingService/SharedLibrary/bin/Debug/SharedLibrary.pdb
-/Users/ronaldroyce/Projects/ReportingService/SharedLibrary/obj/Debug/SharedLibrary.dll
-/Users/ronaldroyce/Projects/ReportingService/SharedLibrary/obj/Debug/SharedLibrary.pdb

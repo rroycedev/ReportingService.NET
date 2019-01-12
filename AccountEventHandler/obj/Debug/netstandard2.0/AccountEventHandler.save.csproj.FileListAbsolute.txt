@@ -1,4 +1,0 @@
-/Users/ronaldroyce/Projects/ReportingService/AccountEventHandler/obj/Debug/netstandard2.0/AccountEventHandler.save.csprojAssemblyReference.cache
-/Users/ronaldroyce/Projects/ReportingService/AccountEventHandler/obj/Debug/netstandard2.0/AccountEventHandler.save.csproj.CoreCompileInputs.cache
-/Users/ronaldroyce/Projects/ReportingService/AccountEventHandler/obj/Debug/netstandard2.0/AccountEventHandler.save.AssemblyInfoInputs.cache
-/Users/ronaldroyce/Projects/ReportingService/AccountEventHandler/obj/Debug/netstandard2.0/AccountEventHandler.save.AssemblyInfo.cs
