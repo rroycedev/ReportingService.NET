@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Slant.Entity</name>
+    </assembly>
+    <members>
+        <member name="T:Slant.Entity.DbContextScopeOption">
+            <summary>
+            Indicates whether or not a new DbContextScope will join the ambient scope.
+            </summary>
+        </member>
+        <member name="F:Slant.Entity.DbContextScopeOption.JoinExisting">
+            <summary>
+            Join the ambient DbContextScope if one exists. Creates a new
+            one otherwise.
+            
+            This is what you want in most cases. Joining the existing ambient scope
+            ensures that all code within a business transaction uses the same DbContext
+            instance and that all changes made by service methods called within that 
+            business transaction are either committed or rolled back atomically when the top-level
+            scope completes (i.e. it ensures that there are no partial commits). 
+            </summary>
+        </member>
+        <member name="F:Slant.Entity.DbContextScopeOption.ForceCreateNew">
+            <summary>
+            Ignore the ambient DbContextScope (if any) and force the creation of 
+            a new DbContextScope. 
+            
+            This is an advanced feature that should be used with great care. 
+            
+            When forcing the creation of a new scope, new DbContext instances will be 
+            created within that inner scope instead of re-using the DbContext instances that
+            the parent scope (if any) is using. 
+            
+            Any changes made to entities within that inner scope will therefore get persisted 
+            to the database when SaveChanges() is called in the inner scope regardless of wether 
+            or not the parent scope is successful.
+            
+            You would typically do this to ensure that the changes made within the inner scope 
+            are always persisted regardless of the outcome of the overall business transaction
+            (e.g. to persist the results of an operation, such as a remote API call, that
+            cannot be rolled back or to persist audit or log entries that must not be rolled back
+            regardless of the outcome of the business transaction). 
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.DbContextCollection">
+            <summary>
+            As its name suggests, DbContextCollection maintains a collection of DbContext instances.
+            
+            What it does in a nutshell:
+            - Lazily instantiates DbContext instances when its Get Of TDbContext () method is called
+            (and optionally starts an explicit database transaction).
+            - Keeps track of the DbContext instances it created so that it can return the existing
+            instance when asked for a DbContext of a specific type.
+            - Takes care of committing / rolling back changes and transactions on all the DbContext
+            instances it created when its Commit() or Rollback() method is called.
+            
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.DbContextCollection.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+            <summary>
+            Returns the value associated with the specified key or the default 
+            value for the TValue  type.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.DbContextScope.SetAmbientScope(Slant.Entity.DbContextScope)">
+            <summary>
+            Makes the provided 'dbContextScope' available as the the ambient scope via the CallContext.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.DbContextScope.RemoveAmbientScope">
+            <summary>
+            Clears the ambient scope from the CallContext and stops tracking its instance. 
+            Call this when a DbContextScope is being disposed.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.DbContextScope.HideAmbientScope">
+            <summary>
+            Clears the ambient scope from the CallContext but keeps tracking its instance. Call this to temporarily 
+            hide the ambient context (e.g. to prevent it from being captured by parallel task).
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.DbContextScope.GetAmbientScope">
+            <summary>
+            Get the current ambient scope or null if no ambient scope has been setup.
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.IAmbientDbContextLocator">
+            <summary>
+                Convenience methods to retrieve ambient DbContext instances.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IAmbientDbContextLocator.Get``1">
+            <summary>
+                If called within the scope of a DbContextScope, gets or creates
+                the ambient DbContext instance for the provided DbContext type.
+                Otherwise returns null.
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.IDbContext">
+            <summary>
+            Interface for every EF data context used with library
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.IDbContextCollection">
+            <summary>
+            Maintains a list of lazily-created DbContext instances.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextCollection.Get``1">
+            <summary>
+            Get or create a DbContext instance of the specified type. 
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.IDbContextFactory">
+            <summary>
+            Factory for DbContext-derived classes that don't expose 
+            a default constructor.
+            </summary>
+            <remarks>
+            If your DbContext-derived classes have a default constructor, 
+            you can ignore this factory. DbContextScope will take care of
+            instanciating your DbContext class with Activator.CreateInstance() 
+            when needed.
+            
+            If your DbContext-derived classes don't expose a default constructor
+            however, you must impement this interface and provide it to DbContextScope
+            so that it can create instances of your DbContexts.
+            
+            A typical situation where this would be needed is in the case of your DbContext-derived 
+            class having a dependency on some other component in your application. For example, 
+            some data in your database may be encrypted and you might want your DbContext-derived
+            class to automatically decrypt this data on entity materialization. It would therefore 
+            have a mandatory dependency on an IDataDecryptor component that knows how to do that. 
+            In that case, you'll want to implement this interface and pass it to the DbContextScope
+            you're creating so that DbContextScope is able to create your DbContext instances correctly. 
+            </remarks>
+        </member>
+        <member name="T:Slant.Entity.IDbContextReadOnlyScope">
+            <summary>
+            A read-only DbContextScope. Refer to the comments for IDbContextScope
+            for more details.
+            </summary>
+        </member>
+        <member name="P:Slant.Entity.IDbContextReadOnlyScope.DbContexts">
+            <summary>
+            The DbContext instances that this DbContextScope manages.
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.IDbContextScope">
+            <summary>
+            Creates and manages the DbContext instances used by this code block. 
+            
+            You typically use a DbContextScope at the business logic service level. Each 
+            business transaction (i.e. each service method) that uses Entity Framework must
+            be wrapped in a DbContextScope, ensuring that the same DbContext instances 
+            are used throughout the business transaction and are committed or rolled 
+            back atomically.
+            
+            Think of it as TransactionScope but for managing DbContext instances instead 
+            of database transactions. Just like a TransactionScope, a DbContextScope is 
+            ambient, can be nested and supports async execution flows.
+            
+            And just like TransactionScope, it does not support parallel execution flows. 
+            You therefore MUST suppress the ambient DbContextScope before kicking off parallel 
+            tasks or you will end up with multiple threads attempting to use the same DbContext
+            instances (use IDbContextScopeFactory.SuppressAmbientContext() for this).
+            
+            You can access the DbContext instances that this scopes manages via either:
+            - its DbContexts property, or
+            - an IAmbientDbContextLocator
+            
+            (you would typically use the later in the repository / query layer to allow your repository
+            or query classes to access the ambient DbContext instances without giving them access to the actual
+            DbContextScope).
+            
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScope.SaveChanges">
+            <summary>
+            Saves the changes in all the DbContext instances that were created within this scope.
+            This method can only be called once per scope.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScope.SaveChangesAsync">
+            <summary>
+            Saves the changes in all the DbContext instances that were created within this scope.
+            This method can only be called once per scope.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScope.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Saves the changes in all the DbContext instances that were created within this scope.
+            This method can only be called once per scope.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScope.RefreshEntitiesInParentScope(System.Collections.IEnumerable)">
+            <summary>
+            Reloads the provided persistent entities from the data store
+            in the DbContext instances managed by the parent scope. 
+            
+            If there is no parent scope (i.e. if this DbContextScope
+            if the top-level scope), does nothing.
+            
+            This is useful when you have forced the creation of a new
+            DbContextScope and want to make sure that the parent scope
+            (if any) is aware of the entities you've modified in the 
+            inner scope.
+            
+            (this is a pretty advanced feature that should be used 
+            with parsimony). 
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScope.RefreshEntitiesInParentScopeAsync(System.Collections.IEnumerable)">
+            <summary>
+            Reloads the provided persistent entities from the data store
+            in the DbContext instances managed by the parent scope. 
+            
+            If there is no parent scope (i.e. if this DbContextScope
+            if the top-level scope), does nothing.
+            
+            This is useful when you have forced the creation of a new
+            DbContextScope and want to make sure that the parent scope
+            (if any) is aware of the entities you've modified in the 
+            inner scope.
+            
+            (this is a pretty advanced feature that should be used 
+            with parsimony). 
+            </summary>
+        </member>
+        <member name="P:Slant.Entity.IDbContextScope.DbContexts">
+            <summary>
+            The DbContext instances that this DbContextScope manages. Don't call SaveChanges() on the DbContext themselves!
+            Save the scope instead.
+            </summary>
+        </member>
+        <member name="T:Slant.Entity.IDbContextScopeFactory">
+            <summary>
+            Convenience methods to create a new ambient DbContextScope. This is the prefered method
+            to create a DbContextScope.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScopeFactory.Create(Slant.Entity.DbContextScopeOption)">
+            <summary>
+            Creates a new DbContextScope.
+            
+            By default, the new scope will join the existing ambient scope. This
+            is what you want in most cases. This ensures that the same DbContext instances
+            are used by all services methods called within the scope of a business transaction.
+            
+            Set 'joiningOption' to 'ForceCreateNew' if you want to ignore the ambient scope
+            and force the creation of new DbContext instances within that scope. Using 'ForceCreateNew'
+            is an advanced feature that should be used with great care and only if you fully understand the
+            implications of doing this.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScopeFactory.CreateReadOnly(Slant.Entity.DbContextScopeOption)">
+            <summary>
+            Creates a new DbContextScope for read-only queries.
+            
+            By default, the new scope will join the existing ambient scope. This
+            is what you want in most cases. This ensures that the same DbContext instances
+            are used by all services methods called within the scope of a business transaction.
+            
+            Set 'joiningOption' to 'ForceCreateNew' if you want to ignore the ambient scope
+            and force the creation of new DbContext instances within that scope. Using 'ForceCreateNew'
+            is an advanced feature that should be used with great care and only if you fully understand the
+            implications of doing this.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScopeFactory.CreateWithTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Forces the creation of a new ambient DbContextScope (i.e. does not
+            join the ambient scope if there is one) and wraps all DbContext instances
+            created within that scope in an explicit database transaction with 
+            the provided isolation level. 
+            
+            WARNING: the database transaction will remain open for the whole 
+            duration of the scope! So keep the scope as short-lived as possible.
+            Don't make any remote API calls or perform any long running computation 
+            within that scope.
+            
+            This is an advanced feature that you should use very carefully
+            and only if you fully understand the implications of doing this.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScopeFactory.CreateReadOnlyWithTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Forces the creation of a new ambient read-only DbContextScope (i.e. does not
+            join the ambient scope if there is one) and wraps all DbContext instances
+            created within that scope in an explicit database transaction with 
+            the provided isolation level. 
+            
+            WARNING: the database transaction will remain open for the whole 
+            duration of the scope! So keep the scope as short-lived as possible.
+            Don't make any remote API calls or perform any long running computation 
+            within that scope.
+            
+            This is an advanced feature that you should use very carefully
+            and only if you fully understand the implications of doing this.
+            </summary>
+        </member>
+        <member name="M:Slant.Entity.IDbContextScopeFactory.SuppressAmbientContext">
+            <summary>
+            Temporarily suppresses the ambient DbContextScope. 
+            
+            Always use this if you need to  kick off parallel tasks within a DbContextScope. 
+            This will prevent the parallel tasks from using the current ambient scope. If you
+            were to kick off parallel tasks within a DbContextScope without suppressing the ambient
+            context first, all the parallel tasks would end up using the same ambient DbContextScope, which 
+            would result in multiple threads accesssing the same DbContext instances at the same 
+            time.
+            </summary>
+        </member>
+        <member name="T:Slant.Linq.ExpandableDbAsyncEnumerator`1">
+            <summary> 
+            Class for async-await style list enumeration support (e.g. .ToListAsync())
+            </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableDbAsyncEnumerator`1.#ctor(System.Collections.Generic.IEnumerator{`0})">
+            <summary> 
+            Class for async-await style list enumeration support (e.g. .ToListAsync())
+            </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableDbAsyncEnumerator`1.Dispose">
+            <summary> Dispose, .NET using-pattern </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableDbAsyncEnumerator`1.MoveNextAsync(System.Threading.CancellationToken)">
+            <summary> 
+            Enumerator-pattern: MoveNext 
+            </summary>
+        </member>
+        <member name="P:Slant.Linq.ExpandableDbAsyncEnumerator`1.Current">
+            <summary> 
+            Enumerator-pattern: Current item 
+            </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableExtensions.AsExpandable``1(System.Linq.IQueryable{``0})">
+            <summary> 
+            Returns wrapper that automatically expands expressions 
+            </summary>
+        </member>
+        <member name="T:Slant.Linq.ExpandableQuery`1">
+            <summary>
+            An IQueryable wrapper that allows us to visit the query's expression tree just before LINQ to SQL gets to it.
+            This is based on the excellent work of Tomas Petricek: http://tomasp.net/blog/linq-expand.aspx
+            </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableQuery`1.GetEnumerator">
+            <summary> 
+            IQueryable enumeration 
+            </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableQuery`1.ToString">
+            <summary> 
+            IQueryable string presentation.  
+            </summary>
+        </member>
+        <member name="M:Slant.Linq.ExpandableQuery`1.GetAsyncEnumerator">
+            <summary> 
+            Enumerator for async-await 
+            </summary>
+        </member>
+    </members>
+</doc>
