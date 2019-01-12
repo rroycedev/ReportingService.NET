@@ -1,0 +1,35 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingService", "ReportingService\ReportingService.csproj", "{CC02D0F6-DC8E-4487-B620-89E6CB985C4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingReflectionLibrary", "ReportingReflectionLibrary\ReportingReflectionLibrary.csproj", "{BC0FEE09-EDAE-4ABA-BEB0-D2EAFFE4F672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountEventHandler", "EventHandlers\AccountEventHandler\AccountEventHandler.csproj", "{537B0D06-3EFE-45E9-AD80-4B6745DB91DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingServiceDatabase", "ReportingServiceDatabase\ReportingServiceDatabase.csproj", "{66824D0E-72AE-4F54-BE3B-57CC439B014A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC02D0F6-DC8E-4487-B620-89E6CB985C4F}.Debug|x86.ActiveCfg = Debug|x86
+		{CC02D0F6-DC8E-4487-B620-89E6CB985C4F}.Debug|x86.Build.0 = Debug|x86
+		{CC02D0F6-DC8E-4487-B620-89E6CB985C4F}.Release|x86.ActiveCfg = Release|x86
+		{CC02D0F6-DC8E-4487-B620-89E6CB985C4F}.Release|x86.Build.0 = Release|x86
+		{BC0FEE09-EDAE-4ABA-BEB0-D2EAFFE4F672}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC0FEE09-EDAE-4ABA-BEB0-D2EAFFE4F672}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC0FEE09-EDAE-4ABA-BEB0-D2EAFFE4F672}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC0FEE09-EDAE-4ABA-BEB0-D2EAFFE4F672}.Release|x86.Build.0 = Release|Any CPU
+		{537B0D06-3EFE-45E9-AD80-4B6745DB91DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{537B0D06-3EFE-45E9-AD80-4B6745DB91DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{537B0D06-3EFE-45E9-AD80-4B6745DB91DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{537B0D06-3EFE-45E9-AD80-4B6745DB91DE}.Release|x86.Build.0 = Release|Any CPU
+		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Debug|x86.Build.0 = Debug|Any CPU
+		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Release|x86.ActiveCfg = Release|Any CPU
+		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
