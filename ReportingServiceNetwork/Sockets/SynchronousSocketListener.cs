@@ -9,13 +9,15 @@ namespace ReportingServiceNetwork.Sockets
 
     using ReportingServiceNetwork.Messages;
 
-    public static class SynchronousSocketListener
+    public class SynchronousSocketListener
     {
 
         // Incoming data from the client.  
         public static string data = null;
 
-        public static void StartListening(int port)
+        public delegate void HandleRequestDelegate(ReportingServiceMessage msg);
+
+        public static void StartListening(int port, HandleRequestDelegate handleRequestDelegate)
         {
             // Data buffer for incoming data.  
             byte[] bytes = new Byte[1024];
@@ -145,6 +147,8 @@ namespace ReportingServiceNetwork.Sockets
 
                     receivedMsg.MessageType = (ReportingServiceMessage.MessageTypes)msgType;
                     receivedMsg.Arguments = arguments.ToArray();
+
+                    handleRequestDelegate(receivedMsg);
 
                     resultMsg = "Ok";
                 }

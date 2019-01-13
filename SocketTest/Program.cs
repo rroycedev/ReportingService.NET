@@ -1,6 +1,6 @@
 ﻿using System;
 
-using ReportingServiceNetwork.TUSocket;
+using ReportingServiceNetwork.Sockets;
 using ReportingServiceNetwork.Messages;
 
 namespace SocketTest
@@ -31,17 +31,6 @@ namespace SocketTest
 
             switch (testType)
             {
-                case "SERVER":
-                    try
-                    {
-                        SynchronousSocketListener.StartListening(11000);
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                        return;
-                    }
-                    break;
                 case "CLIENT":
                     try
                     {
