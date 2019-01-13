@@ -131,9 +131,50 @@ namespace ReportingService.Queue
 
         }
 
+        private void ReleaseQueueListMutex(bool wantException = true)
+        {
+            if (wantException)
+            {
+                _queueListMutex.ReleaseMutex();
+            }
+            else
+            {
+                try
+                {
+                    _queueListMutex.ReleaseMutex();
+                }
+#pragma warning disable RECS0022 // A catch clause that catches System.Exception and has an empty body
+                catch
+#pragma warning restore RECS0022 // A catch clause that catches System.Exception and has an empty body
+                {
+                }
+            }
+        }
+
+        private void ReleaseDbConnection(ConnectionManager connectionManager, TuDbConnection dbConnection, bool wantException = true)
+        {
+            if (wantException)
+            {
+                connectionManager.Release(dbConnection);
+            }
+            else
+            {
+                try
+                {
+                    connectionManager.Release(dbConnection);
+                }
+#pragma warning disable RECS0022 // A catch clause that catches System.Exception and has an empty body
+                catch
+#pragma warning restore RECS0022 // A catch clause that catches System.Exception and has an empty body
+                {
+
+                }
+            }
+        }
+
         public void LoadEvents(string threadId, ulong eventId, ConnectionManager connectionManager)
         {
-           // Logger.Debug("Wating for queue list mutex for event id " + eventId);
+            //  Get access to the "Queue List" mutex
 
             bool isOwned = _queueListMutex.WaitOne(15000);
 
@@ -143,70 +184,65 @@ namespace ReportingService.Queue
                 return;
             }
 
+            //  Get connection to database from pool
+
             TuDbConnection dbConnection;
 
             try
             {
-            //    Logger.Debug(threadId + " - Getting connection for event id " + eventId);
-
                 dbConnection = connectionManager.GetConnection();
-
             }
             catch (DbNoConnections dbn)
             {
-                _queueListMutex.ReleaseMutex();
+                //  Since throwing an exception, ignore any exceptions along the way
+                ReleaseQueueListMutex(false);
                 throw dbn;
             }
             catch (MySql.Data.MySqlClient.MySqlException mex)
             {
-                _queueListMutex.ReleaseMutex();
+                //  Since throwing an exception, ignore any exceptions along the way
+                ReleaseQueueListMutex(false);
                 throw mex;
             }
             catch (Exception ex)
             {
-                _queueListMutex.ReleaseMutex();
+                //  Since throwing an exception, ignore any exceptions along the way
+                ReleaseQueueListMutex(false);
                 throw ex;
             }
+
+            //  Create the "Report Events" data adapter
 
             ReportEventsDataAdapter reportEventsDataAdapter = new ReportEventsDataAdapter(dbConnection);
 
             try
             {
-           //     Logger.Debug("Getting event by id for event id " + eventId);
+                //  Query the "report_events" table for events with id = "eventId"
 
-                List<ReportEvent> events = reportEventsDataAdapter.GetByEventId(eventId, 50);
+                UInt32 maxEventsToQueue = Convert.ToUInt32(ReportingServiceDatabase.Configuration.ConfigurationReader.GetAppSetting("maxeventstoqueue"));
 
-           //     Logger.Debug("Retrieved " + events.Count + " events for event id " + eventId);
+                List<ReportEvent> events = reportEventsDataAdapter.GetByEventId(eventId, maxEventsToQueue);
+
+                ReleaseDbConnection(connectionManager, dbConnection);
 
                 foreach (ReportEvent e in events)
                 {
                     this._eventQueues[eventId].AddEvent(e);
                 }
 
-                connectionManager.Release(dbConnection);
-
-         //      Logger.Debug(threadId + " -  Releasing queue list mutex");
-
-                _queueListMutex.ReleaseMutex();
-
-        //       Logger.Debug(threadId + " -  Releasing queue list mutex again");
-
-                try
-                {
-                    _queueListMutex.ReleaseMutex();
-                }
-                catch(Exception)
-                {
-                  //  Logger.Debug(threadId + " -  2nd Releasing queue list mutex again failed");
-                }
-
-               // Logger.Debug(threadId + " -  Done Releasing queue list mutex again");
+                ReleaseQueueListMutex();
             }
             catch (Exception ex)
             {
-                connectionManager.Release(dbConnection);
-                _queueListMutex.ReleaseMutex();
+                //  Since throwing an exception, ignore any exceptions along the way
+
+                ReleaseDbConnection(connectionManager, dbConnection, false);
+                ReleaseQueueListMutex(false);
                 throw ex;
+            }
+            finally
+            {
+
             }
         }
     }
