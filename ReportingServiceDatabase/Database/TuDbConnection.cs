@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using MySql.Data.MySqlClient;
 using System.Threading;
+using ReportingServiceDatabase.Host;
 
 namespace ReportingServiceDatabase.Classes.Database
 {
@@ -28,7 +29,7 @@ namespace ReportingServiceDatabase.Classes.Database
 
             String hostname = b["server"].ToString();
 
-            this.hostIp = ConnectionManager.HostnameToIp(hostname);
+            this.hostIp = HostUtil.HostnameToIp(hostname);
 
           //  this.Connect(connectionName);
         }
@@ -77,7 +78,7 @@ namespace ReportingServiceDatabase.Classes.Database
 
             String hostname = b["server"].ToString();
 
-            this.hostIp = ConnectionManager.HostnameToIp(hostname);
+            this.hostIp = HostUtil.HostnameToIp(hostname);
 
         }
 

@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountEventHandler", "Even
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingServiceDatabase", "ReportingServiceDatabase\ReportingServiceDatabase.csproj", "{66824D0E-72AE-4F54-BE3B-57CC439B014A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingServiceNetwork", "ReportingServiceNetwork\ReportingServiceNetwork.csproj", "{E6D50E80-DEFC-4553-9A10-5675BD453D5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTest", "SocketTest\SocketTest.csproj", "{57EBD01F-E58F-41ED-906D-234D393475C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportingServiceDaemon", "ReportingServiceDaemon\ReportingServiceDaemon.csproj", "{D5CD9879-19E5-4354-8223-EDB911AC6AA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,5 +31,17 @@ Global
 		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Debug|x86.Build.0 = Debug|Any CPU
 		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Release|x86.ActiveCfg = Release|Any CPU
 		{66824D0E-72AE-4F54-BE3B-57CC439B014A}.Release|x86.Build.0 = Release|Any CPU
+		{E6D50E80-DEFC-4553-9A10-5675BD453D5F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E6D50E80-DEFC-4553-9A10-5675BD453D5F}.Debug|x86.Build.0 = Debug|Any CPU
+		{E6D50E80-DEFC-4553-9A10-5675BD453D5F}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6D50E80-DEFC-4553-9A10-5675BD453D5F}.Release|x86.Build.0 = Release|Any CPU
+		{57EBD01F-E58F-41ED-906D-234D393475C7}.Debug|x86.ActiveCfg = Debug|x86
+		{57EBD01F-E58F-41ED-906D-234D393475C7}.Debug|x86.Build.0 = Debug|x86
+		{57EBD01F-E58F-41ED-906D-234D393475C7}.Release|x86.ActiveCfg = Release|x86
+		{57EBD01F-E58F-41ED-906D-234D393475C7}.Release|x86.Build.0 = Release|x86
+		{D5CD9879-19E5-4354-8223-EDB911AC6AA1}.Debug|x86.ActiveCfg = Debug|x86
+		{D5CD9879-19E5-4354-8223-EDB911AC6AA1}.Debug|x86.Build.0 = Debug|x86
+		{D5CD9879-19E5-4354-8223-EDB911AC6AA1}.Release|x86.ActiveCfg = Release|x86
+		{D5CD9879-19E5-4354-8223-EDB911AC6AA1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal

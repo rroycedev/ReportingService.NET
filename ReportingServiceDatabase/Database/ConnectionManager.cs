@@ -9,6 +9,8 @@ using System.Net.Sockets;
 using MySql.Data.MySqlClient;
 
 using ReportingServiceDatabase.Classes.Exceptions;
+using ReportingServiceDatabase.Host;
+
 using static System.Console;
 
 namespace ReportingServiceDatabase.Classes.Database
@@ -35,7 +37,7 @@ namespace ReportingServiceDatabase.Classes.Database
 
             String hostname = b["server"].ToString();
 
-            this.currentHostIp = ConnectionManager.HostnameToIp(hostname);
+            this.currentHostIp = HostUtil.HostnameToIp(hostname);
 
             for (int i = 0; i < poolSize; i++)
             {
@@ -45,26 +47,6 @@ namespace ReportingServiceDatabase.Classes.Database
             }
 
         }
-
-        public static String HostnameToIp(String hostname)
-        {
-            IPHostEntry hostEntry;
-
-            hostEntry = Dns.GetHostEntry(hostname);
-
-            //you might get more than one ip for a hostname since 
-            //DNS supports more than one record
-
-            if (hostEntry.AddressList.Length > 0)
-            {
-                var ip = hostEntry.AddressList[0];
-
-                return ip.ToString();
-            }
-
-            return "";
-        }
-
 
         public TuDbConnection GetConnection()
         {
@@ -87,7 +69,7 @@ namespace ReportingServiceDatabase.Classes.Database
                 b.ConnectionString = connectString;
 
                 hostname = b["server"].ToString();
-                hostIp = ConnectionManager.HostnameToIp(hostname);
+                hostIp = HostUtil.HostnameToIp(hostname);
             }
             catch(Exception ex)
             {

@@ -71,6 +71,7 @@
     <Compile Include="DataAdapters\EventLogDataAdapter.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Configuration\ConfigurationReader.cs" />
+    <Compile Include="Host\HostUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
@@ -79,6 +80,7 @@
     <Folder Include="DataAdapters\" />
     <Folder Include="Logging\" />
     <Folder Include="Configuration\" />
+    <Folder Include="Host\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

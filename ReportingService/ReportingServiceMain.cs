@@ -10,6 +10,8 @@ using ReportingServiceDatabase.Logging;
 using ReportingServiceDatabase.Classes.Database;
 using ReportingServiceDatabase.Configuration;
 using ReportingServiceDatabase.Classes.Exceptions;
+using ReportingServiceDatabase.Host;
+
 using ReportingService.Reflection;
 using ReportingService.Queue;
 using ReportingService.DataAdapters;
@@ -118,6 +120,8 @@ namespace ReportingService
 
             while (true)
             {
+                Logger.Debug("Worker Thread: " + Thread.CurrentThread.ManagedThreadId + "  Host Ip: " + HostUtil.GetLocalIPAddress() + "  Thread Id: " + threadId);
+
                 if (firstTime)
                 {
                   //  Logger.Debug(String.Format("{0} - Loading events from database table...", threadId));
