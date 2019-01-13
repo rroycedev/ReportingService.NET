@@ -82,11 +82,11 @@
     <Compile Include="Classes\Reflection\ReflectionManager.cs" />
     <Compile Include="AccountEventProcesser.cs" />
     <Compile Include="EventProcesser.cs" />
-    <Compile Include="Classes\EventQueue.cs" />
-    <Compile Include="Classes\EventQueueManager.cs" />
     <Compile Include="ReportingServiceMain.cs" />
     <Compile Include="DataSets\SupportedEventProcessor.cs" />
     <Compile Include="DataAdapters\SupportedEventProcessorDataAdapter.cs" />
+    <Compile Include="Queue\EventQueue.cs" />
+    <Compile Include="Queue\EventQueueManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -97,6 +97,7 @@
     <Folder Include="Classes\Reflection\" />
     <Folder Include="DataSets\" />
     <Folder Include="DataAdapters\" />
+    <Folder Include="Queue\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReportingServiceDatabase\ReportingServiceDatabase.csproj">
