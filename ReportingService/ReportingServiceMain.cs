@@ -10,7 +10,7 @@ using ReportingServiceDatabase.Logging;
 using ReportingServiceDatabase.Classes.Database;
 using ReportingServiceDatabase.Configuration;
 using ReportingServiceDatabase.Classes.Exceptions;
-using ReportingService.Classes.Reflection;
+using ReportingService.Reflection;
 using ReportingService.Queue;
 using ReportingService.DataAdapters;
 using ReportingService.DataSets;
@@ -122,7 +122,16 @@ namespace ReportingService
                 {
                   //  Logger.Debug(String.Format("{0} - Loading events from database table...", threadId));
 
-                    eventsQueueManager.LoadEvents(threadId, thisEventId, connectionManager);
+                    try
+                    {
+                        eventsQueueManager.LoadEvents(threadId, thisEventId, connectionManager);
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Error("Unable to load events: " + ex.Message);
+                        continue;
+                    }
+
                     firstTime = false;
                 }
 
