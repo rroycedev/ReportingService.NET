@@ -71,6 +71,7 @@
     <Compile Include="DataSets\EventLog.cs" />
     <Compile Include="DataAdapters\EventLogDataAdapter.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Configuration\ConfigurationReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
@@ -78,6 +79,7 @@
     <Folder Include="DataSets\" />
     <Folder Include="DataAdapters\" />
     <Folder Include="Logging\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
