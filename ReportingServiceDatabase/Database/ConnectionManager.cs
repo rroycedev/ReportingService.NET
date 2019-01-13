@@ -66,11 +66,9 @@ namespace ReportingServiceDatabase.Classes.Database
         }
 
 
-        public TuDbConnection GetConnection(String threadId)
+        public TuDbConnection GetConnection()
         {
             connectionMutex.WaitOne();
-
-//            Logger.Debug(threadId + " - Getting connection from " + this.connectionPool.Count + " slots ....");
 
             String connectString;
             DbProviderFactory f;
@@ -93,7 +91,7 @@ namespace ReportingServiceDatabase.Classes.Database
             }
             catch(Exception ex)
             {
-                WriteLine("Internal error: " + ex.Message);
+                Logging.Logger.Error("Internal error: " + ex.Message);
                 return null;
             }
 
@@ -109,7 +107,7 @@ namespace ReportingServiceDatabase.Classes.Database
 
                         if (hostIp != this.currentHostIp)
                         {
-                            WriteLine("ConnectionManager: IP of host has changed");
+                            Logging.Logger.Debug("ConnectionManager: IP of host has changed");
 
                             Int32 hostsCleared = 0;
                             Int32 hostsRemaining = 0;
@@ -119,7 +117,7 @@ namespace ReportingServiceDatabase.Classes.Database
                                 if (!this.connectionPool[j].InUse && this.connectionPool[j].HostIp != hostIp)
                                 {
                                     hostsCleared++;
-                                    WriteLine(String.Format("ConnectionManager: Clearing pool of connection {0}", j));
+                                    Logging.Logger.Debug(String.Format("ConnectionManager: Clearing pool of connection {0}", j));
 
                                     connectionPool[j].ClearPool();
 
@@ -127,7 +125,7 @@ namespace ReportingServiceDatabase.Classes.Database
                                 }
                                 else if (this.connectionPool[j].InUse && this.connectionPool[j].HostIp != hostIp)
                                 {
-                                    WriteLine(String.Format("ConnectionManager: Remaining Poold Id {0}  Connection Id {1} Host Ip {2}", this.connectionPool[j].PoolId, this.connectionPool[j].ConnectionId, this.connectionPool[j].HostIp));
+                                    Logging.Logger.Debug(String.Format("ConnectionManager: Remaining Poold Id {0}  Connection Id {1} Host Ip {2}", this.connectionPool[j].PoolId, this.connectionPool[j].ConnectionId, this.connectionPool[j].HostIp));
 
                                     hostsRemaining++;
                                 }
@@ -136,13 +134,13 @@ namespace ReportingServiceDatabase.Classes.Database
 
                             if (hostsCleared == 0 && hostsRemaining == 0)
                             {
-                                WriteLine("ConnectionManager: All connections have been switched over.  Setting hostIp");
+                                Logging.Logger.Debug("ConnectionManager: All connections have been switched over.  Setting hostIp");
 
                                 this.currentHostIp = hostIp;
                             }
                             else
                             {
-                                WriteLine(String.Format("ConnectionManager: {0} cleared {1} remaining", hostsCleared, hostsRemaining));
+                                Logging.Logger.Debug(String.Format("ConnectionManager: {0} cleared {1} remaining", hostsCleared, hostsRemaining));
                             }
                         }
 
@@ -158,8 +156,6 @@ namespace ReportingServiceDatabase.Classes.Database
 
                         conn = this.connectionPool[i];
 
-//                        Logger.Debug(threadId + " - Got connection from " + this.connectionPool.Count + " slots ....");
-
                         break;
                     }
                 }
@@ -167,7 +163,7 @@ namespace ReportingServiceDatabase.Classes.Database
             }
             catch(Exception ex)
             {
-                WriteLine(string.Format("ConnectionManager: Exception while trying to get connection from connection pool: {0}", ex.Message));
+                Logging.Logger.Error(string.Format("ConnectionManager: Exception while trying to get connection from connection pool: {0}", ex.Message));
                 connectionMutex.ReleaseMutex();
                 return null;
             }
@@ -179,24 +175,15 @@ namespace ReportingServiceDatabase.Classes.Database
                 throw new DbNoConnections();
             }
 
-  //          Logger.Debug(threadId + " - Returning connection from " + this.connectionPool.Count + " slots ....");
-
             return conn;
 
         }
 
         public void Release(TuDbConnection conn)
         {
-  //          Logger.Debug(String.Format("ConnectionManager: Waiting for semaphore to release connection {0}", conn.PoolId));
-
             connectionMutex.WaitOne();
 
-
-    //        Logger.Debug(String.Format("ConnectionManager: Releasing connection {0}", conn.PoolId));
-
             this.connectionPool[conn.PoolId].Release();
-
-      //      Logger.Debug(String.Format("ConnectionManager: Releasing semaphore for connection {0}", conn.PoolId));
 
             connectionMutex.ReleaseMutex();
         }

@@ -5,7 +5,12 @@ namespace ReportingServiceDatabase.Logging
     {
         public static void Debug(string msg)
         {
-            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + msg);
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": DEBUG     " + msg);
+        }
+
+        public static void Error(string msg)
+        {
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": ERROR     " + msg);
         }
     }
 }

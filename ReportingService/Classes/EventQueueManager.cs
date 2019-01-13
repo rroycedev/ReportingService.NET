@@ -50,7 +50,7 @@ namespace ReportingService.Classes
 
             try
             {
-                this.DeleteEventFromTable(threadId, evt, cm);
+                this.DeleteEventFromTable(evt, cm);
             }
             catch (DbNoConnections dbn)
             {
@@ -92,14 +92,14 @@ namespace ReportingService.Classes
             _queueListMutex.ReleaseMutex();
         }
 
-        private void DeleteEventFromTable(String threadId, ReportEvent evt, ConnectionManager cm)
+        private void DeleteEventFromTable(ReportEvent evt, ConnectionManager cm)
         {
             TuDbConnection dbConnection;
 
             try
             {
 
-                dbConnection = cm.GetConnection(threadId);
+                dbConnection = cm.GetConnection();
 
             }
             catch (DbNoConnections dbn)
@@ -149,7 +149,7 @@ namespace ReportingService.Classes
             {
             //    Logger.Debug(threadId + " - Getting connection for event id " + eventId);
 
-                dbConnection = connectionManager.GetConnection(threadId);
+                dbConnection = connectionManager.GetConnection();
 
             }
             catch (DbNoConnections dbn)

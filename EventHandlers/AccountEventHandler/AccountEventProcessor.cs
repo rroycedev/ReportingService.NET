@@ -20,7 +20,7 @@ namespace AccountEventHandler
 
             try
             {
-                dbConnection = cm.GetConnection("Main");
+                dbConnection = cm.GetConnection();
             }
             catch(Exception ex)
             {
@@ -55,7 +55,7 @@ namespace AccountEventHandler
 
             try
             {
-                dbConnection = cm.GetConnection("Main");
+                dbConnection = cm.GetConnection();
             }
             catch (Exception ex)
             {
@@ -90,7 +90,7 @@ namespace AccountEventHandler
 
             try
             {
-                dbConnection = cm.GetConnection("Main");
+                dbConnection = cm.GetConnection();
             }
             catch (Exception ex)
             {

@@ -34,7 +34,7 @@ namespace ReportingService
 
             try
             {
-                conn = connectionManager.GetConnection("Main");
+                conn = connectionManager.GetConnection();
             }
             catch (Exception ex)
             {
