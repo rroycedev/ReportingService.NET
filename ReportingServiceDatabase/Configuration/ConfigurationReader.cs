@@ -2,7 +2,7 @@
 
 using System.Configuration;
 
-namespace ReportingService.Classes.Configuration
+namespace ReportingServiceDatabase.Configuration
 {
     public class ConfigurationReader
     {

@@ -5,7 +5,7 @@ using ReportingServiceDatabase.Classes.Exceptions;
 using ReportingServiceDatabase.Classes.Database;
 using ReportingServiceDatabase.DataSets;
 using ReportingServiceDatabase.Logging;
-using ReportingService.Classes.Configuration;
+using ReportingServiceDatabase.Configuration;
 
 namespace ReportingService.Classes.Reflection
 {

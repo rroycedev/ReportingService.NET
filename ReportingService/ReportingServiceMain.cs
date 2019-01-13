@@ -10,7 +10,7 @@ using ReportingServiceDatabase.Logging;
 // using ReportingService.Models;
 using ReportingService.Classes;
 using ReportingServiceDatabase.Classes.Database;
-using ReportingService.Classes.Configuration;
+using ReportingServiceDatabase.Configuration;
 using ReportingServiceDatabase.Classes.Exceptions;
 using ReportingService.Classes.Reflection;
 
