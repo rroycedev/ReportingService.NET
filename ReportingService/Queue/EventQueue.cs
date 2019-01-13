@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using ReportingServiceDatabase.DataSets;
 
-namespace ReportingService.Classes
+namespace ReportingService.Queue
 {
     public class EventQueue
     {

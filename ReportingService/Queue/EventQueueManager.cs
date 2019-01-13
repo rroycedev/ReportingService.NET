@@ -9,7 +9,7 @@ using ReportingServiceDatabase.Classes.Database;
 using ReportingServiceDatabase.Classes.Exceptions;
 using System.Linq;
 
-namespace ReportingService.Classes
+namespace ReportingService.Queue
 {
     public class EventQueueManager
     {
