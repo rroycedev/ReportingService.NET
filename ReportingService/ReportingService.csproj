@@ -78,9 +78,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThreadExtension.cs" />
-    <Compile Include="AccountEventProcesser.cs" />
-    <Compile Include="EventProcesser.cs" />
     <Compile Include="ReportingServiceMain.cs" />
     <Compile Include="DataSets\SupportedEventProcessor.cs" />
     <Compile Include="DataAdapters\SupportedEventProcessorDataAdapter.cs" />
