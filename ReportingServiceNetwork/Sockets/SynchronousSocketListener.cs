@@ -17,7 +17,21 @@ namespace ReportingServiceNetwork.Sockets
 
         public delegate void HandleRequestDelegate(ReportingServiceMessage msg);
 
-        public static void StartListening(int port, HandleRequestDelegate handleRequestDelegate)
+        private HandleRequestDelegate _handleRequestDelegate = null;
+
+        public  HandleRequestDelegate HandleRequest
+        {
+            get
+            {
+                return this._handleRequestDelegate;
+            }
+            set
+            {
+                this._handleRequestDelegate = value;
+            }
+        }
+
+        public void StartListening(int port)
         {
             // Data buffer for incoming data.  
             byte[] bytes = new Byte[1024];
@@ -148,7 +162,7 @@ namespace ReportingServiceNetwork.Sockets
                     receivedMsg.MessageType = (ReportingServiceMessage.MessageTypes)msgType;
                     receivedMsg.Arguments = arguments.ToArray();
 
-                    handleRequestDelegate(receivedMsg);
+                    this.HandleRequest?.Invoke(receivedMsg);
 
                     resultMsg = "Ok";
                 }

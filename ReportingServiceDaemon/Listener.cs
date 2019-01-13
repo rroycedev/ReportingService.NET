@@ -10,7 +10,12 @@ namespace ReportingServiceDaemon
         {
             try
             {
-                SynchronousSocketListener.StartListening(port, HandleRequest);
+                SynchronousSocketListener listener = new SynchronousSocketListener
+                {
+                    HandleRequest = Listener.HandleRequest
+                };
+
+                listener.StartListening(port);
             }
             catch (Exception ex)
             {
