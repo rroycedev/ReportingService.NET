@@ -79,7 +79,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadExtension.cs" />
-    <Compile Include="Classes\Reflection\ReflectionManager.cs" />
     <Compile Include="AccountEventProcesser.cs" />
     <Compile Include="EventProcesser.cs" />
     <Compile Include="ReportingServiceMain.cs" />
@@ -87,17 +86,17 @@
     <Compile Include="DataAdapters\SupportedEventProcessorDataAdapter.cs" />
     <Compile Include="Queue\EventQueue.cs" />
     <Compile Include="Queue\EventQueueManager.cs" />
+    <Compile Include="Reflection\ReflectionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
-    <Folder Include="Classes\Reflection\" />
     <Folder Include="DataSets\" />
     <Folder Include="DataAdapters\" />
     <Folder Include="Queue\" />
+    <Folder Include="Reflection\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReportingServiceDatabase\ReportingServiceDatabase.csproj">
