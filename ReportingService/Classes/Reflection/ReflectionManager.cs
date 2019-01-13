@@ -5,7 +5,7 @@ using ReportingServiceDatabase.Classes.Exceptions;
 using ReportingServiceDatabase.Classes.Database;
 using ReportingServiceDatabase.DataSets;
 using ReportingServiceDatabase.Logging;
-
+using ReportingService.Classes.Configuration;
 
 namespace ReportingService.Classes.Reflection
 {
@@ -17,9 +17,16 @@ namespace ReportingService.Classes.Reflection
 
         public static Assembly LoadAssembly(String fileName)
         {
-            Logger.Debug("Loading assembly: " + fileName);
+            String eventHandlerPath = ConfigurationReader.GetAppSetting("eventhandlerbinaypath").ToString();
 
-            return Assembly.LoadFile(fileName);
+            if (!eventHandlerPath.EndsWith("/", StringComparison.CurrentCulture))
+            {
+                eventHandlerPath = eventHandlerPath + "/";
+            }
+
+            Logger.Debug("Loading assembly: " + eventHandlerPath + fileName);
+
+            return Assembly.LoadFile(eventHandlerPath + fileName);
         }
 
         public static void ProcessEvent(Assembly asm, String className, String methodName, ReportEvent evt, ConnectionManager connectionManager, int sleepTime)
