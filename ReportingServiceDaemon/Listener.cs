@@ -4,7 +4,7 @@ using ReportingServiceNetwork.Sockets;
 
 namespace ReportingServiceDaemon
 {
-    public class Listener
+    public static class Listener
     {
         public static void Start(int port)
         {
