@@ -7,7 +7,7 @@ using ReportingServiceDatabase.DataSets;
 using ReportingServiceDatabase.Logging;
 using ReportingServiceDatabase.Configuration;
 
-namespace ReportingService.Classes.Reflection
+namespace ReportingService.Reflection
 {
     public class ReflectionManager
     {
